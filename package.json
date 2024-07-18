@@ -1,10 +1,13 @@
 {
-  "name": "v-map",
-  "private": true,
-  "version": "0.0.1",
+  "name": "@mobee/v-map",
+  "version": "0.0.2",
   "type": "module",
   "main": "dist/v-map.umd.js",
   "module": "dist/v-map.es.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orange12promax/v-map.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
