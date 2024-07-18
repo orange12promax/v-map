@@ -1,18 +1,25 @@
 {
   "name": "v-map",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "main": "dist/v-map.umd.js",
+  "module": "dist/v-map.es.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@maptalks/vt": "^0.95.0",
+    "maptalks": "1.0.0-rc.33",
     "vue": "^3.4.31"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "eslint": "^9.7.0",
+    "prettier": "^3.3.3",
     "vite": "^5.3.4"
   }
 }
