@@ -1,5 +1,5 @@
 {
-  "name": "@mobee/v-map",
+  "name": "@orange12promax/v-map",
   "version": "0.0.2",
   "type": "module",
   "main": "dist/v-map.umd.js",
