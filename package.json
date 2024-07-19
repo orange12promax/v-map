@@ -1,6 +1,6 @@
 {
   "name": "@orange12promax/v-map",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "type": "module",
   "main": "dist/v-map.umd.js",
   "module": "dist/v-map.es.js",
@@ -24,5 +24,9 @@
     "eslint": "^9.7.0",
     "prettier": "^3.3.3",
     "vite": "^5.3.4"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }
