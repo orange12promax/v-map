@@ -1,6 +1,6 @@
 {
   "name": "@orange12promax/v-map",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist/v-map.umd.js",
   "module": "dist/v-map.es.js",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@maptalks/vt": "^0.95.0",
+    "eventemitter3": "^5.0.1",
     "maptalks": "1.0.0-rc.33",
     "vue": "^3.4.31"
   },
