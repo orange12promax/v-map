@@ -1,9 +1,10 @@
 import { inject, onMounted, watch, toRaw } from 'vue'
-import { mapName } from './config'
+import { mapName, mapEvent } from './config'
 
 export function useMapLife() {
   let localMap = null
   const injectMap = inject(mapName)
+  const ee = inject(mapEvent)
   let mapMountedCallback
 
   onMounted(() => {
@@ -31,6 +32,7 @@ export function useMapLife() {
   }
 
   return {
-    onMapMounted
+    onMapMounted,
+    ee
   }
 }

@@ -1,2 +1,3 @@
 import 'maptalks/dist/maptalks.css'
-export * from '@/components'
+import './styles/map.css'
+export * from './components'
