@@ -29,7 +29,6 @@ onMounted(() => {
   map.on('click', (e) => {
     ee.emit('click', e.coordinate)
   })
-  console.log('load')
   mapRef.value = map
 })
 

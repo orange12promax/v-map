@@ -17,6 +17,7 @@
     "@maptalks/vt": "^0.95.0",
     "eventemitter3": "^5.0.1",
     "maptalks": "1.0.0-rc.33",
+    "qs": "^6.13.0",
     "vue": "^3.4.31"
   },
   "devDependencies": {
