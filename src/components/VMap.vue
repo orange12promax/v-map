@@ -14,7 +14,9 @@ import { updateServerUrl } from '../services/common'
 import EventEmitter from 'eventemitter3'
 
 const props = defineProps({
-  server: String
+  server: String,
+  center: Array,
+  zoom: Number
 })
 
 const mapRef = ref()
@@ -23,8 +25,8 @@ const ee = new EventEmitter()
 onMounted(() => {
   updateServerUrl(props.server)
   const map = new Map('homemap', {
-    center: [118.846825, 32.046534],
-    zoom: 14
+    center: props.center,
+    zoom: props.zoom
   })
   map.on('click', (e) => {
     ee.emit('click', e.coordinate)

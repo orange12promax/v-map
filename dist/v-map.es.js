@@ -18206,15 +18206,17 @@ const TD = /* @__PURE__ */ vs(AD), SD = { class: "w-full h-full relative" }, MD 
 }, null, -1), U7 = {
   __name: "VMap",
   props: {
-    server: String
+    server: String,
+    center: Array,
+    zoom: Number
   },
   setup(i) {
     const t = i, e = YE(), r = new TD();
     return iT(() => {
       bD(t.server);
       const n = new mD("homemap", {
-        center: [118.846825, 32.046534],
-        zoom: 14
+        center: t.center,
+        zoom: t.zoom
       });
       n.on("click", (s) => {
         r.emit("click", s.coordinate);
