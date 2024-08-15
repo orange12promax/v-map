@@ -58434,7 +58434,7 @@ const HW = {
     let n;
     return e((s) => {
       w9(i.id).then((o) => {
-        o.code === 200 && (n = new an(i.id, { features: !0, ...o.data }), n.addTo(s));
+        o.code === 200 && (n = new an(i.id, { features: !0, schema: !0, ...o.data }), n.addTo(s));
       });
     }), lp(() => {
       n.remove();

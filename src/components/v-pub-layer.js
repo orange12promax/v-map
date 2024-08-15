@@ -14,7 +14,7 @@ export default {
     onMapMounted((map) => {
       getStyle(props.id).then((res) => {
         if (res.code === 200) {
-          tileLayer = new VectorTileLayer(props.id, { features: true, ...res.data })
+          tileLayer = new VectorTileLayer(props.id, { features: true, schema: true, ...res.data })
           tileLayer.addTo(map)
         }
       })
