@@ -23,20 +23,20 @@ export default {
       tileLayer.remove()
     })
 
-    function simplifyEventData(item) {
-      const { coordinate, data, point } = item
-      return {
-        coordinate,
-        feature: data?.feature,
-        point
-      }
-    }
+    // function simplifyEventData(item) {
+    //   const { coordinate, data, point } = item
+    //   return {
+    //     coordinate,
+    //     feature: data?.feature,
+    //     point
+    //   }
+    // }
 
     ee.on('click', (coor) => {
       if (tileLayer) {
         const geometrys = tileLayer.identify(coor)
         if (geometrys instanceof Array && geometrys.length > 0) {
-          context.emit('click', geometrys.map(simplifyEventData))
+          context.emit('click', geometrys)
         }
       }
     })

@@ -58432,25 +58432,16 @@ const HW = {
   setup(i, t) {
     const { onMapMounted: e, ee: r } = Tp();
     let n;
-    e((o) => {
-      w9(i.id).then((a) => {
-        a.code === 200 && (n = new an(i.id, { features: !0, ...a.data }), n.addTo(o));
+    return e((s) => {
+      w9(i.id).then((o) => {
+        o.code === 200 && (n = new an(i.id, { features: !0, ...o.data }), n.addTo(s));
       });
     }), lp(() => {
       n.remove();
-    });
-    function s(o) {
-      const { coordinate: a, data: l, point: h } = o;
-      return {
-        coordinate: a,
-        feature: l == null ? void 0 : l.feature,
-        point: h
-      };
-    }
-    return r.on("click", (o) => {
+    }), r.on("click", (s) => {
       if (n) {
-        const a = n.identify(o);
-        a instanceof Array && a.length > 0 && t.emit("click", a.map(s));
+        const o = n.identify(s);
+        o instanceof Array && o.length > 0 && t.emit("click", o);
       }
     }), () => null;
   }
