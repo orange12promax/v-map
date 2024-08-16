@@ -1,6 +1,6 @@
 {
   "name": "@orange12promax/v-map",
-  "version": "0.1.4",
+  "version": "0.1.8",
   "type": "module",
   "main": "dist/v-map.umd.js",
   "module": "dist/v-map.es.js",
