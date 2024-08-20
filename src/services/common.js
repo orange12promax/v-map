@@ -4,6 +4,10 @@ export function updateServerUrl(url) {
   serverUrl = url
 }
 
+export function getServerUrl() {
+  return serverUrl
+}
+
 export function requestService({ url, method, data }) {
   return new Promise((resolve, reject) => {
     let finalData = null

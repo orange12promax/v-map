@@ -1,3 +1,4 @@
+import { getServerUrl } from '../services/common'
 import { useMapLife } from './common'
 import { VectorTileLayer } from '@maptalks/vt'
 import { watch, onBeforeUnmount, computed, ref } from 'vue'
@@ -45,11 +46,13 @@ export default {
     const layerOptions = computed(() => {
       const {
         style: { symbol, ...restStyle },
+        urlTemplate,
         ...restData
       } = layerOriginOptions.value
       const nextOptions = {
         features: true,
         ...restData,
+        urlTemplate: `${getServerUrl()}${urlTemplate}`,
         style: {
           ...restStyle,
           symbol: prepareSymbol(symbol)
