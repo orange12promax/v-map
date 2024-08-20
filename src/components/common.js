@@ -1,6 +1,6 @@
 import { inject, onMounted, watch, toRaw } from 'vue'
 import { mapName, mapEvent } from './config'
-import { Marker, VectorLayer } from './maptalks'
+import { VectorLayer } from './maptalks'
 
 export function useMapLife() {
   let localMap = null
@@ -52,5 +52,17 @@ export function useVectorLayer() {
   }
   return {
     addVector
+  }
+}
+
+export function useCommonLayer() {
+  const injectMap = inject(mapName)
+  function addLayer(layer) {
+    if (layer) {
+      injectMap.value.addLayer(layer)
+    }
+  }
+  return {
+    addLayer
   }
 }

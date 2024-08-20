@@ -2,8 +2,7 @@
   "name": "@orange12promax/v-map",
   "version": "0.1.9",
   "type": "module",
-  "main": "dist/v-map.umd.js",
-  "module": "dist/v-map.es.js",
+  "module": "src/lib.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/orange12promax/v-map.git"

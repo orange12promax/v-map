@@ -1,33 +1,63 @@
-import { useMapLife } from './common'
+import { useMapLife, useCommonLayer } from './common'
 import { TileLayer } from './maptalks'
-import { onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, computed, watch } from 'vue'
 import { getTiandituUrl, subdomains } from './tianditu'
 
 export default {
   name: 'VTiandituLayer',
   props: {
     type: String,
-    tk: String
+    tk: String,
+    zIndex: Number
   },
   setup(props) {
     const { onMapMounted } = useMapLife()
+    const { addLayer } = useCommonLayer()
+
     let tileLayer
-    const layerId = `tianditu-${props.type}`
-    onMapMounted((map) => {
-      tileLayer = new TileLayer(layerId, {
+
+    const layerParam = computed(() => ({
+      type: props.type,
+      tk: props.tk
+    }))
+
+    function destroyLayer() {
+      if (tileLayer) {
+        tileLayer.remove()
+        tileLayer = null
+      }
+    }
+
+    function createLayer(layerProps) {
+      destroyLayer()
+      tileLayer = new TileLayer(`tianditu-${layerProps.type}`, {
         urlTemplate: getTiandituUrl({
-          layer: props.type,
+          layer: layerProps.type,
           tileMatrixSet: 'w',
-          tk: props.tk
+          tk: layerProps.tk
         }),
-        subdomains
+        subdomains,
+        zIndex: props.zIndex || 0
       })
-      tileLayer.addTo(map)
+      addLayer(tileLayer)
+    }
+
+    onMapMounted(() => {
+      createLayer(layerParam.value)
     })
     onBeforeUnmount(() => {
-      // remove layer from map
       tileLayer.remove()
     })
+    watch(layerParam, (newValue) => {
+      createLayer(newValue)
+    })
+    watch(
+      () => props.zIndex,
+      (newValue) => {
+        tileLayer?.setZIndex(newValue)
+      }
+    )
+
     return () => null
   }
 }
