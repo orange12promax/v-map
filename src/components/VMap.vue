@@ -6,11 +6,10 @@
 </template>
 
 <script setup>
-import { onMounted, provide, ref } from 'vue'
+import { onMounted, provide, ref, computed } from 'vue'
 import { Map } from './maptalks'
 import 'maptalks/dist/maptalks.css'
-import { mapName, mapEvent } from './config'
-import { updateServerUrl } from '../services/common'
+import { mapName, mapServer, mapEvent } from './config'
 import EventEmitter from 'eventemitter3'
 
 const props = defineProps({
@@ -21,9 +20,9 @@ const props = defineProps({
 
 const mapRef = ref()
 const ee = new EventEmitter()
+const mapServerUrl = computed(() => props.server)
 
 onMounted(() => {
-  updateServerUrl(props.server)
   const map = new Map('homemap', {
     center: props.center,
     zoom: props.zoom
@@ -36,4 +35,5 @@ onMounted(() => {
 
 provide(mapName, mapRef)
 provide(mapEvent, ee)
+provide(mapServer, mapServerUrl)
 </script>

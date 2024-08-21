@@ -1,8 +1,6 @@
-import { getServerUrl } from '../services/common'
 import { useCommonLayer, useMapLife } from './common'
 import { VectorTileLayer } from '@maptalks/vt'
-import { watch, onBeforeUnmount, computed, ref, onMounted } from 'vue'
-import { getStyle } from '../services/style'
+import { watch, onBeforeUnmount, onMounted, computed } from 'vue'
 import { usePubLayer } from './pub-layer/main'
 
 export default {
@@ -17,8 +15,8 @@ export default {
   setup(props, context) {
     const { onMapMounted, ee } = useMapLife()
     const { addLayer } = useCommonLayer()
-    const { queryLayer, layerOptions, finalStyleOption } = usePubLayer()
-
+    const filter = computed(() => props.filter)
+    const { queryLayer, layerOptions } = usePubLayer(filter)
     let tileLayer
 
     function destroyLayer() {
@@ -43,23 +41,14 @@ export default {
     onMapMounted(() => {
       createLayer(props.id, layerOptions.value)
     })
-    watch(finalStyleOption, (nv) => {
-      if (tileLayer) {
-        tileLayer.setStyle(nv)
-      }
+    watch(layerOptions, (nv) => {
+      console.log(nv)
+      createLayer(props.id, nv)
     })
+
     onBeforeUnmount(() => {
       tileLayer.remove()
     })
-
-    // function simplifyEventData(item) {
-    //   const { coordinate, data, point } = item
-    //   return {
-    //     coordinate,
-    //     feature: data?.feature,
-    //     point
-    //   }
-    // }
 
     ee.on('click', (coor) => {
       if (tileLayer) {

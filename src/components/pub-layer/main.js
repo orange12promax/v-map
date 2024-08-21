@@ -1,16 +1,17 @@
-import { computed, ref } from 'vue'
+import { computed, ref, inject } from 'vue'
 import { getBetterSymbol } from '@/components/pub-layer/symbol.js'
-import { getServerUrl } from '@/services/common.js'
-import { getStyle } from '@/services/style.js'
-
-export function usePubLayer() {
+import { requestService } from '@/services/common.js'
+import { mapServer } from '../config.js'
+export function usePubLayer(filter) {
   const styleOption = ref()
+  const mapServerUrl = inject(mapServer)
+
   const finalStyleOption = computed(() => {
     if (styleOption.value) {
-      const { symbol, filter, ...rest } = styleOption.value
-      let finalFilter = filter
-      if (props.filter.length > 0) {
-        finalFilter = props.filter
+      const { symbol, filter: originFilter, ...rest } = styleOption.value
+      let finalFilter = originFilter
+      if (filter.value instanceof Array && filter.value.length > 0) {
+        finalFilter = filter.value
       }
       return {
         symbol: getBetterSymbol(symbol),
@@ -24,7 +25,7 @@ export function usePubLayer() {
   const finalRestOption = computed(() => {
     if (restOption.value) {
       const { urlTemplate, ...rest } = restOption.value
-      const finalUrlTemplate = `${getServerUrl()}${urlTemplate}`
+      const finalUrlTemplate = `${mapServerUrl.value}${urlTemplate}`
       return {
         features: true,
         urlTemplate: finalUrlTemplate,
@@ -34,7 +35,10 @@ export function usePubLayer() {
     return null
   })
   async function queryLayer(id) {
-    const res = await getStyle(id)
+    const res = await requestService({
+      url: `${mapServerUrl.value}/style/get/${id}`,
+      method: 'GET'
+    })
     if (res.code === 200 && res.data) {
       const { style, ...rest } = res.data
       styleOption.value = style
@@ -48,7 +52,7 @@ export function usePubLayer() {
   const layerOptions = computed(() => {
     if (finalStyleOption.value && finalRestOption.value) {
       return {
-        ...finalStyleOption.value,
+        style: finalStyleOption.value,
         ...finalRestOption.value
       }
     }
@@ -57,7 +61,6 @@ export function usePubLayer() {
 
   return {
     queryLayer,
-    layerOptions,
-    finalStyleOption
+    layerOptions
   }
 }
