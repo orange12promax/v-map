@@ -1,6 +1,6 @@
 {
   "name": "@orange12promax/v-map",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "module": "src/lib.js",
   "repository": {
@@ -13,20 +13,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@maptalks/vt": "^0.95.0",
+    "@maptalks/vt": "^0.96.4",
     "eventemitter3": "^5.0.1",
-    "maptalks": "1.0.0-rc.33",
+    "maptalks": "1.0.0-rc.37",
     "qs": "^6.13.0",
-    "vue": "^3.4.31"
+    "vue": "^3.4.38"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
-    "@vitejs/plugin-vue": "^5.0.5",
-    "@vitejs/plugin-vue-jsx": "^4.0.0",
-    "eslint": "^9.7.0",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "@vitejs/plugin-vue-jsx": "^4.0.1",
+    "eslint": "^9.9.0",
     "eslint-plugin-vue": "^9.27.0",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
-    "vite": "^5.3.4"
+    "vite": "^5.4.2"
   }
 }
