@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full relative">
     <div id="homemap" class="w-full h-full relative"></div>
-    <slot></slot>
+    <slot v-if="ready"></slot>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ const props = defineProps({
 const mapRef = ref()
 const ee = new EventEmitter()
 const mapServerUrl = computed(() => props.server)
+const ready = ref(false)
 
 onMounted(() => {
   const map = new Map('homemap', {
@@ -31,6 +32,7 @@ onMounted(() => {
     ee.emit('click', e.coordinate)
   })
   mapRef.value = map
+  ready.value = true
 })
 
 provide(mapName, mapRef)

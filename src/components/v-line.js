@@ -1,6 +1,6 @@
-import { useMapLife, useVectorLayer } from './common'
+import { useVectorLayer } from './common'
 import { Line } from './maptalks'
-import { onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 
 export default {
   name: 'VLine',
@@ -8,11 +8,10 @@ export default {
     coor: Array,
     symbol: Object
   },
-  setup(props) {
-    const { onMapMounted } = useMapLife()
+  setup(props, context) {
     const { addVector } = useVectorLayer()
     let instance
-    onMapMounted(() => {
+    onMounted(() => {
       instance = new Line(props.coor, {
         symbol: props.symbol
       })

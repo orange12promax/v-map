@@ -22,6 +22,12 @@ export function usePubLayer(filter) {
     return null
   })
   const restOption = ref()
+  const urlTemplate = computed(() => {
+    if (restOption.value?.urlTemplate && mapServerUrl.value) {
+      return `${mapServerUrl.value}${restOption.value.urlTemplate}`
+    }
+    return null
+  })
   const finalRestOption = computed(() => {
     if (restOption.value) {
       const { urlTemplate, ...rest } = restOption.value
@@ -50,10 +56,11 @@ export function usePubLayer(filter) {
   }
 
   const layerOptions = computed(() => {
-    if (finalStyleOption.value && finalRestOption.value) {
+    if (urlTemplate.value && finalStyleOption.value) {
       return {
-        style: finalStyleOption.value,
-        ...finalRestOption.value
+        ...finalRestOption.value,
+        urlTemplate: urlTemplate.value,
+        style: finalStyleOption.value
       }
     }
     return null

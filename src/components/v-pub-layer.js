@@ -13,7 +13,7 @@ export default {
     }
   },
   setup(props, context) {
-    const { onMapMounted, ee } = useMapLife()
+    const { ee } = useMapLife()
     const { addLayer } = useCommonLayer()
     const filter = computed(() => props.filter)
     const { queryLayer, layerOptions } = usePubLayer(filter)
@@ -34,13 +34,11 @@ export default {
       }
     }
 
-    onMounted(() => {
-      queryLayer(props.id)
-    })
-
-    onMapMounted(() => {
+    onMounted(async () => {
+      await queryLayer(props.id)
       createLayer(props.id, layerOptions.value)
     })
+
     watch(layerOptions, (nv) => {
       console.log(nv)
       createLayer(props.id, nv)

@@ -1,6 +1,7 @@
-import { useMapLife } from './common'
 import { TileLayer } from './maptalks'
-import { onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
+import { useCommonLayer } from './common.js'
+
 export default {
   name: 'VTileLayer',
   props: {
@@ -11,11 +12,11 @@ export default {
     }
   },
   setup(props) {
-    const { onMapMounted } = useMapLife()
+    const { addLayer } = useCommonLayer()
     let tileLayer
-    onMapMounted((map) => {
+    onMounted(() => {
       tileLayer = new TileLayer(props.id, props.options)
-      tileLayer.addTo(map)
+      addLayer(tileLayer)
     })
     onBeforeUnmount(() => {
       // remove layer from map

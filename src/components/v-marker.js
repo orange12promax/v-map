@@ -1,6 +1,6 @@
-import { useMapLife, useVectorLayer } from './common'
+import { useVectorLayer } from './common'
 import { Marker } from './maptalks'
-import { onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 
 export default {
   name: 'VMarker',
@@ -10,10 +10,9 @@ export default {
     properties: Object
   },
   setup(props, context) {
-    const { onMapMounted } = useMapLife()
     const { addVector } = useVectorLayer()
     let instance
-    onMapMounted(() => {
+    onMounted(() => {
       instance = new Marker(props.coor, {
         symbol: props.symbol,
         properties: props.properties

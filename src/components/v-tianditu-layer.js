@@ -1,6 +1,6 @@
-import { useMapLife, useCommonLayer } from './common'
+import { useCommonLayer } from './common'
 import { TileLayer } from './maptalks'
-import { onBeforeUnmount, computed, watch } from 'vue'
+import { onBeforeUnmount, computed, watch, onMounted } from 'vue'
 import { getTiandituUrl, subdomains } from './tianditu'
 
 export default {
@@ -11,7 +11,6 @@ export default {
     zIndex: Number
   },
   setup(props) {
-    const { onMapMounted } = useMapLife()
     const { addLayer } = useCommonLayer()
 
     let tileLayer
@@ -42,7 +41,7 @@ export default {
       addLayer(tileLayer)
     }
 
-    onMapMounted(() => {
+    onMounted(() => {
       createLayer(layerParam.value)
     })
     onBeforeUnmount(() => {

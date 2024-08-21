@@ -1,6 +1,7 @@
-import { useMapLife } from './common'
+import { useCommonLayer } from './common'
 import { VectorTileLayer } from '@maptalks/vt'
-import { watch, onBeforeUnmount } from 'vue'
+import { watch, onBeforeUnmount, onMounted } from 'vue'
+
 export default {
   name: 'VVectorTileLayer',
   props: {
@@ -11,11 +12,11 @@ export default {
     }
   },
   setup(props) {
-    const { onMapMounted } = useMapLife()
+    const { addLayer } = useCommonLayer()
     let tileLayer
-    onMapMounted((map) => {
+    onMounted(() => {
       tileLayer = new VectorTileLayer(props.id, props.options)
-      tileLayer.addTo(map)
+      addLayer(tileLayer)
     })
     onBeforeUnmount(() => {
       tileLayer.remove()
