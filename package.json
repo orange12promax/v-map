@@ -1,8 +1,9 @@
 {
   "name": "@orange12promax/v-map",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "type": "module",
-  "module": "src/lib.js",
+  "main": "dist/v-map.umd.js",
+  "module": "dist/v-map.es.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/orange12promax/v-map.git"
@@ -27,6 +28,11 @@
     "eslint-plugin-vue": "^9.27.0",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
-    "vite": "^5.4.2"
-  }
+    "vite": "^5.4.2",
+    "vite-plugin-css-injected-by-js": "^3.5.1"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }
