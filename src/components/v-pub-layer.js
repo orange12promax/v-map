@@ -1,8 +1,9 @@
 import { getServerUrl } from '../services/common'
-import { useMapLife } from './common'
+import { useCommonLayer, useMapLife } from './common'
 import { VectorTileLayer } from '@maptalks/vt'
-import { watch, onBeforeUnmount, computed, ref } from 'vue'
+import { watch, onBeforeUnmount, computed, ref, onMounted } from 'vue'
 import { getStyle } from '../services/style'
+import { usePubLayer } from './pub-layer/main'
 
 export default {
   name: 'VPubLayer',
@@ -15,74 +16,38 @@ export default {
   },
   setup(props, context) {
     const { onMapMounted, ee } = useMapLife()
+    const { addLayer } = useCommonLayer()
+    const { queryLayer, layerOptions, finalStyleOption } = usePubLayer()
+
     let tileLayer
 
-    function string2array(str) {
-      if (str) {
-        return JSON.parse(str)
-      } else {
-        return []
+    function destroyLayer() {
+      if (tileLayer) {
+        tileLayer.remove()
+        tileLayer = null
       }
     }
 
-    function prepareSymbol(originalSymbol) {
-      const { markerFileType, markerFile, markerFileProp, markerFilePropList, ...rest } =
-        originalSymbol
-      if (markerFileType === 'rule') {
-        return {
-          markerFile: {
-            type: 'categorical',
-            property: markerFileProp,
-            stops: string2array(markerFilePropList),
-            default: markerFile
-          },
-          ...rest
-        }
-      } else {
-        return { markerFile, ...rest }
+    function createLayer(id, options) {
+      destroyLayer()
+      if (options) {
+        tileLayer = new VectorTileLayer(id, options)
+        addLayer(tileLayer)
       }
     }
 
-    const layerOptions = computed(() => {
-      const {
-        style: { symbol, ...restStyle },
-        urlTemplate,
-        ...restData
-      } = layerOriginOptions.value
-      const nextOptions = {
-        features: true,
-        ...restData,
-        urlTemplate: `${getServerUrl()}${urlTemplate}`,
-        style: {
-          ...restStyle,
-          symbol: prepareSymbol(symbol)
-        }
-      }
-      if (props.filter.length > 0) {
-        nextOptions.style.filter = props.filter
-      }
-      return nextOptions
+    onMounted(() => {
+      queryLayer(props.id)
     })
 
-    const layerOriginOptions = ref({})
-
-    onMapMounted((map) => {
-      getStyle(props.id).then((res) => {
-        if (res.code === 200) {
-          layerOriginOptions.value = res.data
-          tileLayer = new VectorTileLayer(props.id, layerOptions.value)
-          tileLayer.addTo(map)
-        }
-      })
+    onMapMounted(() => {
+      createLayer(props.id, layerOptions.value)
     })
-    watch(
-      () => props.filter,
-      () => {
-        if (tileLayer) {
-          tileLayer.setOptions(layerOptions.value)
-        }
+    watch(finalStyleOption, (nv) => {
+      if (tileLayer) {
+        tileLayer.setStyle(nv)
       }
-    )
+    })
     onBeforeUnmount(() => {
       tileLayer.remove()
     })
