@@ -1,6 +1,6 @@
 {
   "name": "@orange12promax/v-map",
-  "version": "0.1.9",
+  "version": "0.2.2",
   "type": "module",
   "module": "src/lib.js",
   "repository": {
@@ -28,9 +28,5 @@
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
     "vite": "^5.3.4"
-  },
-  "files": [
-    "dist",
-    "README.md"
-  ]
+  }
 }

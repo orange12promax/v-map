@@ -1,4 +1,4 @@
-@import "maptalks/dist/maptalks.css";
+@import "../node_modules/maptalks/dist/maptalks.css";
 
 .maptalks-attribution {
   display: none !important;
