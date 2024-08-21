@@ -11,10 +11,6 @@ export default {
     filter: {
       type: Array,
       default: () => []
-    },
-    zIndex: {
-      type: Number,
-      default: 0
     }
   },
   setup(props, context) {
@@ -22,6 +18,7 @@ export default {
     const { addLayer } = useCommonLayer()
     const filter = computed(() => props.filter)
     const { queryLayer, layerOptions } = usePubLayer(filter)
+
     let tileLayer
 
     function destroyLayer() {
@@ -45,7 +42,6 @@ export default {
     })
 
     watch(layerOptions, (nv) => {
-      console.log(nv)
       createLayer(props.id, nv)
     })
 

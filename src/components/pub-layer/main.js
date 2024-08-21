@@ -30,11 +30,12 @@ export function usePubLayer(filter) {
   })
   const finalRestOption = computed(() => {
     if (restOption.value) {
-      const { urlTemplate, ...rest } = restOption.value
+      const { urlTemplate, zindex, ...rest } = restOption.value
       const finalUrlTemplate = `${mapServerUrl.value}${urlTemplate}`
       return {
         features: true,
         urlTemplate: finalUrlTemplate,
+        zIndex: zindex || 1,
         ...rest
       }
     }
