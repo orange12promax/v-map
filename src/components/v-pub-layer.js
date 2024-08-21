@@ -1,7 +1,8 @@
-import { useCommonLayer, useMapLife } from './common'
+import { useCommonLayer } from './common'
 import { VectorTileLayer } from '@maptalks/vt'
-import { watch, onBeforeUnmount, onMounted, computed } from 'vue'
+import { watch, onBeforeUnmount, onMounted, computed, inject } from 'vue'
 import { usePubLayer } from './pub-layer/main'
+import { mapEvent } from '@/components/config.js'
 
 export default {
   name: 'VPubLayer',
@@ -10,10 +11,14 @@ export default {
     filter: {
       type: Array,
       default: () => []
+    },
+    zIndex: {
+      type: Number,
+      default: 0
     }
   },
   setup(props, context) {
-    const { ee } = useMapLife()
+    const ee = inject(mapEvent)
     const { addLayer } = useCommonLayer()
     const filter = computed(() => props.filter)
     const { queryLayer, layerOptions } = usePubLayer(filter)
