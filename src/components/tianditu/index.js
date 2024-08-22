@@ -1,4 +1,4 @@
-import { stringify } from 'qs'
+import { stringify } from '../../utils'
 
 export const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7']
 
