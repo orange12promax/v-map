@@ -1,5 +1,5 @@
-import { useCommonLayer } from '../common.js'
-import { TileLayer } from '../maptalks.js'
+import { useCommonLayer } from '../common/common.js'
+import { TileLayer } from '../common/maptalks.js'
 import { onBeforeUnmount, computed, watch, onMounted } from 'vue'
 import { getTiandituUrl, subdomains } from './methods.js'
 

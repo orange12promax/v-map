@@ -1,7 +1,7 @@
-import { useCommonLayer } from './common'
-import { VectorTileLayer } from './maptalks.js'
+import { useCommonLayer } from './common/common.js'
+import { VectorTileLayer } from './common/maptalks.js'
 import { watch, onBeforeUnmount, onMounted, inject, computed } from 'vue'
-import { mapEvent, mapServer } from '@/components/config.js'
+import { mapEvent, mapServer } from '@/components/common/config.js'
 
 export default {
   name: 'VVectorTileLayer',

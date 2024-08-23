@@ -1,6 +1,6 @@
-import { TileLayer } from './maptalks'
+import { TileLayer } from './common/maptalks.js'
 import { onBeforeUnmount, onMounted } from 'vue'
-import { useCommonLayer } from './common.js'
+import { useCommonLayer } from './common/common.js'
 
 export default {
   name: 'VTileLayer',

@@ -1,5 +1,5 @@
 import { inject, ref, onMounted } from 'vue'
-import { mapServer } from '@/components/config.js'
+import { mapServer } from '@/components/common/config.js'
 
 export function requestService({ url, method, data }) {
   return new Promise((resolve, reject) => {
