@@ -1,6 +1,5 @@
-import { computed, ref, inject } from 'vue'
+import { computed, ref } from 'vue'
 import { getBetterSymbol } from '@/components/pub-layer/symbol.js'
-import { mapServer } from '../config.js'
 import { useFetch } from '@/services/common.js'
 
 export function usePubLayer(filter) {

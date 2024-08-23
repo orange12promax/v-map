@@ -1,6 +1,6 @@
 import { onMounted, computed } from 'vue'
-import { usePubLayer } from './pub-layer/main'
-import VVectorTileLayer from './v-vector-tile-layer.js'
+import { usePubLayer } from './main'
+import VVectorTileLayer from '../v-vector-tile-layer.js'
 
 export default {
   name: 'VPubLayer',
