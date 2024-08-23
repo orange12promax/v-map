@@ -1,7 +1,7 @@
 import { useCommonLayer } from './common'
 import { VectorTileLayer } from './maptalks.js'
-import { watch, onBeforeUnmount, onMounted, inject } from 'vue'
-import { mapEvent } from '@/components/config.js'
+import { watch, onBeforeUnmount, onMounted, inject, computed } from 'vue'
+import { mapEvent, mapServer } from '@/components/config.js'
 
 export default {
   name: 'VVectorTileLayer',
@@ -12,26 +12,43 @@ export default {
     },
     urlTemplate: {
       type: String,
-      required: true
+      required: false
     },
     zIndex: {
       type: Number,
+      required: false,
       default: 1
     },
     style: {
       type: Object,
+      required: false,
       default: () => ({})
     }
   },
   setup(props, context) {
     const ee = inject(mapEvent)
+    const mapServerUrl = inject(mapServer)
     const { addLayer } = useCommonLayer()
+
+    const finalUrlTemplate = computed(() => {
+      if (mapServerUrl.value && props.urlTemplate) {
+        return `${mapServerUrl.value}${props.urlTemplate}`
+      }
+      return null
+    })
+    const finalZIndex = computed(() => {
+      if (props.zIndex >= 0) {
+        return props.zIndex
+      }
+      return 0
+    })
+
     let tileLayer
     function createLayer() {
-      if (props.id && props.urlTemplate) {
+      if (props.id && finalUrlTemplate.value) {
         tileLayer = new VectorTileLayer(props.id, {
-          urlTemplate: props.urlTemplate,
-          zIndex: props.zIndex,
+          urlTemplate: finalUrlTemplate.value,
+          zIndex: finalZIndex.value,
           style: props.style,
           features: true
         })
@@ -61,16 +78,19 @@ export default {
         }
       }
     )
-    watch(
-      () => props.zIndex,
-      (newZIndex) => {
-        if (tileLayer) {
-          tileLayer.setZIndex(newZIndex)
-        } else {
-          createLayer()
-        }
+    watch(finalZIndex, (newZIndex) => {
+      if (tileLayer) {
+        tileLayer.setZIndex(newZIndex)
+      } else {
+        createLayer()
       }
-    )
+    })
+    watch(finalUrlTemplate, () => {
+      if (tileLayer) {
+        destroyLayer()
+      }
+      createLayer()
+    })
 
     ee.on('click', (coor) => {
       if (tileLayer) {

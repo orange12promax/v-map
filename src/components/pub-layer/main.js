@@ -4,7 +4,6 @@ import { mapServer } from '../config.js'
 import { useFetch } from '@/services/common.js'
 
 export function usePubLayer(filter) {
-  const mapServerUrl = inject(mapServer)
   const fetchStyleUrl = ref()
   const fetchFeatureUrl = ref()
   const { execute: executeFetchStyle, data: styleData } = useFetch(fetchStyleUrl)
@@ -13,7 +12,7 @@ export function usePubLayer(filter) {
     execute: executeFetchFeature,
     data: featureData
   } = useFetch(fetchFeatureUrl)
-  const finalStyleOption = computed(() => {
+  const style = computed(() => {
     if (styleData.value?.style) {
       const { symbol, filter: originFilter, ...rest } = styleData.value.style
       let finalFilter = originFilter
@@ -29,20 +28,13 @@ export function usePubLayer(filter) {
     return null
   })
 
-  const finalRestOption = computed(() => {
-    if (styleData.value && mapServerUrl.value) {
-      const { urlTemplate, zindex, ...rest } = styleData.value
-      const finalUrlTemplate = `${mapServerUrl.value}${urlTemplate}`
-      const finalZIndex = zindex || 1
-      return {
-        features: true,
-        urlTemplate: finalUrlTemplate,
-        zIndex: finalZIndex,
-        ...rest
-      }
-    }
-    return null
+  const urlTemplate = computed(() => {
+    return styleData.value?.urlTemplate
   })
+  const zIndex = computed(() => {
+    return styleData.value?.zindex
+  })
+
   async function queryLayer(id) {
     fetchStyleUrl.value = `/style/get/${id}`
     executeFetchStyle()
@@ -50,18 +42,10 @@ export function usePubLayer(filter) {
     executeFetchFeature()
   }
 
-  const layerOptions = computed(() => {
-    if (finalStyleOption.value && finalRestOption.value) {
-      return {
-        ...finalRestOption.value,
-        style: finalStyleOption.value
-      }
-    }
-    return null
-  })
-
   return {
     queryLayer,
-    layerOptions
+    style,
+    urlTemplate,
+    zIndex
   }
 }

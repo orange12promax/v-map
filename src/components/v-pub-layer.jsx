@@ -13,7 +13,7 @@ export default {
   },
   setup(props, context) {
     const filter = computed(() => props.filter)
-    const { queryLayer, layerOptions } = usePubLayer(filter)
+    const { queryLayer, style, urlTemplate, zIndex } = usePubLayer(filter)
 
     onMounted(async () => {
       await queryLayer(props.id)
@@ -22,15 +22,14 @@ export default {
     function handleClick(e) {
       context.emit('click', e)
     }
-    return () =>
-      layerOptions.value ? (
-        <VVectorTileLayer
-          id={props.id}
-          urlTemplate={layerOptions.value.urlTemplate}
-          zIndex={layerOptions.value.zIndex}
-          style={layerOptions.value.style}
-          onCreated={handleClick}
-        />
-      ) : null
+    return () => (
+      <VVectorTileLayer
+        id={props.id}
+        urlTemplate={urlTemplate.value}
+        zIndex={zIndex.value}
+        style={style.value}
+        onCreated={handleClick}
+      />
+    )
   }
 }
