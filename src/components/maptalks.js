@@ -1,4 +1,5 @@
 import * as maptalks from 'maptalks'
+export { VectorTileLayer } from '@maptalks/vt'
 
 export const Map = maptalks.Map
 export const TileLayer = maptalks.TileLayer
