@@ -1,4 +1,4 @@
-import { inject, ref, onMounted } from 'vue'
+import { inject, ref, computed } from 'vue'
 import { mapServer } from '@/components/common/config.js'
 
 export function requestService({ url, method, data }) {
@@ -36,6 +36,13 @@ export function useFetch(url) {
   const mapServerUrl = inject(mapServer)
 
   const data = ref(null)
+  const coreData = computed(() => {
+    if (data.value?.code === 200 && data.value?.data) {
+      return data.value.data
+    } else {
+      return null
+    }
+  })
 
   function execute() {
     isFinished.value = false
@@ -46,11 +53,7 @@ export function useFetch(url) {
     }).then((res) => {
       isFinished.value = true
       isFetching.value = false
-      if (res.code === 200 && res.data) {
-        data.value = res.data
-      } else {
-        data.value = null
-      }
+      data.value = res
     })
   }
 
@@ -58,6 +61,7 @@ export function useFetch(url) {
     isFinished,
     isFetching,
     execute,
-    data
+    data,
+    coreData
   }
 }

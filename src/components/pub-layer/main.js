@@ -2,15 +2,11 @@ import { computed, ref } from 'vue'
 import { getBetterSymbol } from '@/components/pub-layer/symbol.js'
 import { useFetch } from '@/services/common.js'
 
-export function usePubLayer(filter) {
+export function usePubVtLayer(filter) {
   const fetchStyleUrl = ref()
-  const fetchFeatureUrl = ref()
-  const { execute: executeFetchStyle, data: styleData } = useFetch(fetchStyleUrl)
-  const {
-    isFinished: isFeatureFinished,
-    execute: executeFetchFeature,
-    data: featureData
-  } = useFetch(fetchFeatureUrl)
+
+  const { execute: executeFetchStyle, coreData: styleData } = useFetch(fetchStyleUrl)
+
   const style = computed(() => {
     if (styleData.value?.style) {
       const { symbol, filter: originFilter, ...rest } = styleData.value.style
@@ -37,8 +33,6 @@ export function usePubLayer(filter) {
   async function queryLayer(id) {
     fetchStyleUrl.value = `/style/get/${id}`
     executeFetchStyle()
-    fetchFeatureUrl.value = `/wfs/get/${id}`
-    executeFetchFeature()
   }
 
   return {
@@ -46,5 +40,23 @@ export function usePubLayer(filter) {
     style,
     urlTemplate,
     zIndex
+  }
+}
+
+export function usePubGeoJsonLayer() {
+  const fetchFeatureUrl = ref()
+  const {
+    isFinished: isFeatureFinished,
+    execute: executeFetchFeature,
+    data: featureData
+  } = useFetch(fetchFeatureUrl)
+  async function queryJson(id) {
+    fetchFeatureUrl.value = `/wfs/get/${id}`
+    executeFetchFeature()
+  }
+  return {
+    queryJson,
+    isFeatureFinished,
+    featureData
   }
 }

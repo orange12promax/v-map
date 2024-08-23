@@ -1,5 +1,5 @@
-import { useCommonLayer } from './common/common.js'
-import { VectorTileLayer } from './common/maptalks.js'
+import { useCommonLayer } from '../common/common.js'
+import { VectorTileLayer } from '../common/maptalks.js'
 import { watch, onBeforeUnmount, onMounted, inject, computed } from 'vue'
 import { mapEvent, mapServer } from '@/components/common/config.js'
 
@@ -96,7 +96,13 @@ export default {
       if (tileLayer) {
         const geometrys = tileLayer.identify(coor)
         if (geometrys instanceof Array && geometrys.length > 0) {
-          context.emit('click', geometrys)
+          context.emit(
+            'click',
+            geometrys.map((item) => ({
+              layer: props.id,
+              properties: item?.data?.feature?.properties
+            }))
+          )
         }
       }
     })
