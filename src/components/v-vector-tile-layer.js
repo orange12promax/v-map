@@ -1,6 +1,7 @@
 import { useCommonLayer } from './common'
 import { VectorTileLayer } from './maptalks.js'
-import { ref, watch, onBeforeUnmount, onMounted } from 'vue'
+import { watch, onBeforeUnmount, onMounted, inject } from 'vue'
+import { mapEvent } from '@/components/config.js'
 
 export default {
   name: 'VVectorTileLayer',
@@ -22,7 +23,8 @@ export default {
       default: () => ({})
     }
   },
-  setup(props) {
+  setup(props, context) {
+    const ee = inject(mapEvent)
     const { addLayer } = useCommonLayer()
     let tileLayer
     function createLayer() {
@@ -30,7 +32,8 @@ export default {
         tileLayer = new VectorTileLayer(props.id, {
           urlTemplate: props.urlTemplate,
           zIndex: props.zIndex,
-          style: props.style
+          style: props.style,
+          features: true
         })
         addLayer(tileLayer)
       }
@@ -68,6 +71,16 @@ export default {
         }
       }
     )
+
+    ee.on('click', (coor) => {
+      if (tileLayer) {
+        const geometrys = tileLayer.identify(coor)
+        if (geometrys instanceof Array && geometrys.length > 0) {
+          context.emit('click', geometrys)
+        }
+      }
+    })
+
     return () => null
   }
 }
