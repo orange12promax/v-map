@@ -14,9 +14,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@maptalks/vt": "^0.96.4",
+    "@maptalks/vt": "^0.97.2",
     "eventemitter3": "^5.0.1",
     "maptalks": "1.0.0-rc.37",
+    "uuid": "^10.0.0",
     "vue": "^3.4.38"
   },
   "devDependencies": {

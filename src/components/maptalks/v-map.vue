@@ -9,7 +9,7 @@
 import { onMounted, provide, ref, computed, watch } from 'vue'
 import { Map } from '@/components/maptalks/module'
 import 'maptalks/dist/maptalks.css'
-import { mapName, mapServer, mapEvent, mapMethods } from './common/config.js'
+import { mapServer, mapEvent, mapMethods } from '@/components/common/config.js'
 import EventEmitter from 'eventemitter3'
 
 const props = defineProps({
@@ -58,7 +58,6 @@ watch(
   }
 )
 
-provide(mapName, mapRef)
 provide(mapEvent, ee)
 provide(mapServer, mapServerUrl)
 provide(mapMethods, {
