@@ -1,4 +1,4 @@
-import { TileLayer } from './common/maptalks.js'
+import { TileLayer } from '@/components/maptalks/module'
 import { inject, onBeforeUnmount, onMounted } from 'vue'
 import { mapMethods } from '@/components/common/config.js'
 

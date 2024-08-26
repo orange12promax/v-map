@@ -1,5 +1,5 @@
 import { useVectorLayer } from './common/common.js'
-import { Marker } from './common/maptalks.js'
+import { Marker } from '@/components/maptalks/module'
 import { onBeforeUnmount, onMounted } from 'vue'
 
 export default {

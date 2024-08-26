@@ -7,7 +7,7 @@
 
 <script setup>
 import { onMounted, provide, ref, computed, watch } from 'vue'
-import { Map } from './common/maptalks.js'
+import { Map } from '@/components/maptalks/module'
 import 'maptalks/dist/maptalks.css'
 import { mapName, mapServer, mapEvent, mapMethods } from './common/config.js'
 import EventEmitter from 'eventemitter3'

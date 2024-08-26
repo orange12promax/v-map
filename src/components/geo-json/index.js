@@ -1,4 +1,4 @@
-import { VectorLayer, GeoJSON } from '../common/maptalks.js'
+import { VectorLayer, GeoJSON } from '@/components/maptalks/module'
 import { watch, onBeforeUnmount, onMounted, inject } from 'vue'
 import { mapEvent, mapMethods } from '@/components/common/config.js'
 

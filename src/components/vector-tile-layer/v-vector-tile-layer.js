@@ -1,4 +1,4 @@
-import { VectorTileLayer } from '@/components/common/maptalks.js'
+import { VectorTileLayer } from '@/components/maptalks/module'
 import { watch, onBeforeUnmount, onMounted, inject, computed } from 'vue'
 import { mapEvent, mapMethods, mapServer } from '@/components/common/config.js'
 

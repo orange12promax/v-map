@@ -1,4 +1,4 @@
-import { TileLayer } from '../common/maptalks.js'
+import { TileLayer } from '@/components/maptalks/module'
 import { onBeforeUnmount, computed, watch, onMounted, inject } from 'vue'
 import { getTiandituUrl, subdomains } from './methods.js'
 import { mapMethods } from '@/components/common/config.js'

@@ -1,5 +1,5 @@
 import { useVectorLayer } from './common/common.js'
-import { Line } from './common/maptalks.js'
+import { Line } from '@/components/maptalks/module'
 import { onBeforeUnmount, onMounted } from 'vue'
 
 export default {

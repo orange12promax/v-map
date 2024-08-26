@@ -1,6 +1,6 @@
 import { inject } from 'vue'
 import { mapName } from './config.js'
-import { VectorLayer } from './maptalks.js'
+import { VectorLayer } from '@/components/maptalks/module'
 
 export function useVectorLayer() {
   const injectMap = inject(mapName)
