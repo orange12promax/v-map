@@ -1,7 +1,6 @@
-import { useCommonLayer } from '../common/common.js'
-import { VectorTileLayer } from '../common/maptalks.js'
+import { VectorTileLayer } from '@/components/common/maptalks.js'
 import { watch, onBeforeUnmount, onMounted, inject, computed } from 'vue'
-import { mapEvent, mapServer } from '@/components/common/config.js'
+import { mapEvent, mapMethods, mapServer } from '@/components/common/config.js'
 
 export default {
   name: 'VVectorTileLayer',
@@ -28,7 +27,7 @@ export default {
   setup(props, context) {
     const ee = inject(mapEvent)
     const mapServerUrl = inject(mapServer)
-    const { addLayer } = useCommonLayer()
+    const { addLayer } = inject(mapMethods)
 
     const finalUrlTemplate = computed(() => {
       if (mapServerUrl.value && props.urlTemplate) {

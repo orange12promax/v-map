@@ -18,15 +18,3 @@ export function useVectorLayer() {
     addVector
   }
 }
-
-export function useCommonLayer() {
-  const injectMap = inject(mapName)
-  function addLayer(layer) {
-    if (layer) {
-      injectMap.value.addLayer(layer)
-    }
-  }
-  return {
-    addLayer
-  }
-}

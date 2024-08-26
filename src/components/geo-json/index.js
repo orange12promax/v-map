@@ -1,7 +1,6 @@
-import { useCommonLayer } from '../common/common.js'
 import { VectorLayer, GeoJSON } from '../common/maptalks.js'
 import { watch, onBeforeUnmount, onMounted, inject } from 'vue'
-import { mapEvent } from '@/components/common/config.js'
+import { mapEvent, mapMethods } from '@/components/common/config.js'
 
 export default {
   name: 'VGeoJsonLayer',
@@ -22,7 +21,7 @@ export default {
   },
   setup(props, context) {
     const ee = inject(mapEvent)
-    const { addLayer } = useCommonLayer()
+    const { addLayer } = inject(mapMethods)
 
     let tileLayer
     function createLayer() {

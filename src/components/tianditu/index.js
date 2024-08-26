@@ -1,7 +1,7 @@
-import { useCommonLayer } from '../common/common.js'
 import { TileLayer } from '../common/maptalks.js'
-import { onBeforeUnmount, computed, watch, onMounted } from 'vue'
+import { onBeforeUnmount, computed, watch, onMounted, inject } from 'vue'
 import { getTiandituUrl, subdomains } from './methods.js'
+import { mapMethods } from '@/components/common/config.js'
 
 export default {
   name: 'VTiandituLayer',
@@ -11,7 +11,7 @@ export default {
     zIndex: Number
   },
   setup(props) {
-    const { addLayer } = useCommonLayer()
+    const { addLayer } = inject(mapMethods)
 
     let tileLayer
 
