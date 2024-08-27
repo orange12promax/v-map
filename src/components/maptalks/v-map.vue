@@ -63,7 +63,10 @@ provide(mapServer, mapServerUrl)
 provide(mapMethods, {
   addLayer
 })
-provide('parentMap', {})
+provide('parentMap', {
+  event: ee,
+  server: mapServerUrl
+})
 defineExpose({
   setCenter,
   setZoom
