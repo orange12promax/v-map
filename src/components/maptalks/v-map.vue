@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { onMounted, provide, ref, computed, watch } from 'vue'
+import { onMounted, provide, ref, computed, watch, defineExpose } from 'vue'
 import { Map } from '@/components/maptalks/module'
 import 'maptalks/dist/maptalks.css'
 import { mapServer, mapEvent, mapMethods } from '@/components/common/config.js'
@@ -51,16 +51,21 @@ onMounted(() => {
   ready.value = true
 })
 
-watch(
-  () => props.center,
-  (nv) => {
-    map?.setCenter(nv)
-  }
-)
+function setCenter(center) {
+  map?.setCenter(center)
+}
+function setZoom(zoom) {
+  map?.setZoom(zoom)
+}
 
 provide(mapEvent, ee)
 provide(mapServer, mapServerUrl)
 provide(mapMethods, {
   addLayer
+})
+provide('parentMap', {})
+defineExpose({
+  setCenter,
+  setZoom
 })
 </script>
