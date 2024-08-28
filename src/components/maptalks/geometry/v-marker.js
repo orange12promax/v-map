@@ -1,5 +1,5 @@
 import { Marker } from '@/components/maptalks/module.js'
-import { inject, onBeforeUnmount, onMounted } from 'vue'
+import { watch, inject, onBeforeUnmount, onMounted } from 'vue'
 
 export default {
   name: 'VMarker',
@@ -23,6 +23,26 @@ export default {
         geo.remove()
       }
     })
+    useWatch(
+      () => props.coordinates,
+      (instance) => instance.setCoordinates
+    )
+    watch(
+      () => props.coordinates,
+      () => {
+        if (geo) {
+          geo.setCoordinates(props.coordinates)
+        }
+      }
+    )
+    watch(
+      () => props.options,
+      () => {
+        if (geo) {
+          geo.setOptions(props.options)
+        }
+      }
+    )
     return () => null
   }
 }

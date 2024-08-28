@@ -3,7 +3,7 @@
 </template>
 <script setup>
 import { VectorLayer } from '@/components/maptalks/module.js'
-import { ref, inject, onBeforeUnmount, onMounted, provide } from 'vue'
+import { ref, inject, onBeforeUnmount, onMounted, provide, watch } from 'vue'
 import { mapMethods } from '@/components/common/config.js'
 
 const props = defineProps({
@@ -27,6 +27,16 @@ onMounted(() => {
 onBeforeUnmount(() => {
   tileLayer.remove()
 })
+
+watch(
+  () => props.options,
+  () => {
+    if (tileLayer) {
+      tileLayer.setOptions(props.options)
+    }
+  }
+)
+
 provide('parentVectorLayer', {
   addGeometry
 })
