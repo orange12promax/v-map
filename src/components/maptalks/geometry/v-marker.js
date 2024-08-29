@@ -23,10 +23,7 @@ export default {
         geo.remove()
       }
     })
-    useWatch(
-      () => props.coordinates,
-      (instance) => instance.setCoordinates
-    )
+
     watch(
       () => props.coordinates,
       () => {

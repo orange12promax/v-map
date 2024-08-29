@@ -1,5 +1,5 @@
 import { Line } from '@/components/maptalks/module.js'
-import { inject, onBeforeUnmount, onMounted } from 'vue'
+import { inject, onBeforeUnmount, onMounted, watch } from 'vue'
 
 export default {
   name: 'VLine',
@@ -23,6 +23,22 @@ export default {
         geo.remove()
       }
     })
+    watch(
+      () => props.coordinates,
+      () => {
+        if (geo) {
+          geo.setCoordinates(props.coordinates)
+        }
+      }
+    )
+    watch(
+      () => props.options,
+      () => {
+        if (geo) {
+          geo.setOptions(props.options)
+        }
+      }
+    )
     return () => null
   }
 }
