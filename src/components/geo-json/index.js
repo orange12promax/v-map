@@ -1,6 +1,5 @@
 import { VectorLayer, GeoJSON } from '@/components/maptalks/module'
 import { watch, onBeforeUnmount, onMounted, inject } from 'vue'
-import { mapEvent, mapMethods } from '@/components/common/config.js'
 
 export default {
   name: 'VGeoJsonLayer',
@@ -20,8 +19,7 @@ export default {
     }
   },
   setup(props, context) {
-    const ee = inject(mapEvent)
-    const { addLayer } = inject(mapMethods)
+    const { event, addLayer } = inject('parentMap')
 
     let tileLayer
     function createLayer() {
@@ -77,7 +75,7 @@ export default {
       }
     )
 
-    ee.on('click', (coor) => {
+    event.on('click', (coor) => {
       if (tileLayer) {
         const geometrys = tileLayer.identify(coor)
         const newGeo = geometrys.map(({ properties }) => ({ properties, layer: props.id }))

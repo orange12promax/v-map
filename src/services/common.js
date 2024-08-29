@@ -1,5 +1,4 @@
 import { inject, ref, computed } from 'vue'
-import { mapServer } from '@/components/common/config.js'
 
 export function requestService({ url, method, data }) {
   return new Promise((resolve, reject) => {
@@ -33,7 +32,7 @@ export function requestService({ url, method, data }) {
 export function useFetch(url) {
   const isFinished = ref(false)
   const isFetching = ref(false)
-  const mapServerUrl = inject(mapServer)
+  const { serverUrl } = inject('parentMap')
 
   const data = ref(null)
   const coreData = computed(() => {
@@ -48,7 +47,7 @@ export function useFetch(url) {
     isFinished.value = false
     isFetching.value = true
     requestService({
-      url: `${mapServerUrl.value}${url.value}`,
+      url: `${serverUrl.value}${url.value}`,
       method: 'GET'
     }).then((res) => {
       isFinished.value = true

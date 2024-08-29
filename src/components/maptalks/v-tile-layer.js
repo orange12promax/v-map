@@ -1,6 +1,5 @@
 import { TileLayer } from '@/components/maptalks/module.js'
 import { inject, onBeforeUnmount, onMounted } from 'vue'
-import { mapMethods } from '@/components/common/config.js'
 
 export default {
   name: 'VTileLayer',
@@ -12,7 +11,7 @@ export default {
     }
   },
   setup(props) {
-    const { addLayer } = inject(mapMethods)
+    const { addLayer } = inject('parentMap')
     let tileLayer
     onMounted(() => {
       tileLayer = new TileLayer(props.id, props.options)

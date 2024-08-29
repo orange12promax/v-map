@@ -1,7 +1,6 @@
 import { TileLayer } from '@/components/maptalks/module'
 import { onBeforeUnmount, computed, watch, onMounted, inject } from 'vue'
 import { getTiandituUrl, subdomains } from './methods.js'
-import { mapMethods } from '@/components/common/config.js'
 
 export default {
   name: 'VTiandituLayer',
@@ -11,7 +10,7 @@ export default {
     zIndex: Number
   },
   setup(props) {
-    const { addLayer } = inject(mapMethods)
+    const { addLayer } = inject('parentMap')
 
     let tileLayer
 

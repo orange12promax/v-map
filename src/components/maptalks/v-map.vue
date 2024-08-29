@@ -6,10 +6,9 @@
 </template>
 
 <script setup>
-import { onMounted, provide, ref, computed, watch, defineExpose } from 'vue'
+import { onMounted, provide, ref, computed, defineExpose } from 'vue'
 import { Map } from '@/components/maptalks/module'
 import 'maptalks/dist/maptalks.css'
-import { mapServer, mapEvent, mapMethods } from '@/components/common/config.js'
 import EventEmitter from 'eventemitter3'
 
 const props = defineProps({
@@ -21,8 +20,8 @@ const emits = defineEmits(['update:center', 'update:zoom', 'moveend', 'click'])
 
 const mapElement = ref()
 const mapRef = ref()
-const ee = new EventEmitter()
-const mapServerUrl = computed(() => props.server)
+const event = new EventEmitter()
+const serverUrl = computed(() => props.server)
 const ready = ref(false)
 
 let map
@@ -38,7 +37,7 @@ onMounted(() => {
   })
   map.on('click', (e) => {
     const { coordinate } = e
-    ee.emit('click', coordinate)
+    event.emit('click', coordinate)
     emits('click', {
       coordinate: [coordinate.x, coordinate.y]
     })
@@ -58,14 +57,10 @@ function setZoom(zoom) {
   map?.setZoom(zoom)
 }
 
-provide(mapEvent, ee)
-provide(mapServer, mapServerUrl)
-provide(mapMethods, {
-  addLayer
-})
 provide('parentMap', {
-  event: ee,
-  server: mapServerUrl
+  event,
+  serverUrl,
+  addLayer
 })
 defineExpose({
   setCenter,

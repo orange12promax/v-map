@@ -4,14 +4,13 @@
 <script setup>
 import { VectorLayer } from '@/components/maptalks/module.js'
 import { ref, inject, onBeforeUnmount, onMounted, provide, watch } from 'vue'
-import { mapMethods } from '@/components/common/config.js'
 
 const props = defineProps({
   id: String,
   options: Object
 })
 
-const { addLayer } = inject(mapMethods)
+const { addLayer } = inject('parentMap')
 const ready = ref(false)
 let tileLayer
 

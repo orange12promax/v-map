@@ -1,6 +1,5 @@
 import { VectorTileLayer } from '@/components/maptalks/module'
 import { watch, onBeforeUnmount, onMounted, inject, computed } from 'vue'
-import { mapEvent, mapMethods, mapServer } from '@/components/common/config.js'
 
 export default {
   name: 'VVectorTileLayer',
@@ -25,13 +24,11 @@ export default {
     }
   },
   setup(props, context) {
-    const ee = inject(mapEvent)
-    const mapServerUrl = inject(mapServer)
-    const { addLayer } = inject(mapMethods)
+    const { addLayer, serverUrl, event } = inject('parentMap')
 
     const finalUrlTemplate = computed(() => {
-      if (mapServerUrl.value && props.urlTemplate) {
-        return `${mapServerUrl.value}${props.urlTemplate}`
+      if (serverUrl.value && props.urlTemplate) {
+        return `${serverUrl.value}${props.urlTemplate}`
       }
       return null
     })
@@ -91,7 +88,7 @@ export default {
       createLayer()
     })
 
-    ee.on('click', (coor) => {
+    event.on('click', (coor) => {
       if (tileLayer) {
         const geometrys = tileLayer.identify(coor)
         if (geometrys instanceof Array && geometrys.length > 0) {
