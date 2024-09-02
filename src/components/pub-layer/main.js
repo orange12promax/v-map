@@ -1,8 +1,9 @@
-import { computed, ref } from 'vue'
+import { computed, ref, inject } from 'vue'
 import { getBetterSymbol } from '@/components/pub-layer/symbol.js'
 import { useFetch } from '@/services/common.js'
 
 export function usePubVtLayer(filter) {
+  const { serverUrl } = inject('parentMap')
   const fetchStyleUrl = ref()
 
   const { execute: executeFetchStyle, coreData: styleData } = useFetch(fetchStyleUrl)
@@ -15,7 +16,7 @@ export function usePubVtLayer(filter) {
         finalFilter = filter.value
       }
       return {
-        symbol: getBetterSymbol(symbol),
+        symbol: getBetterSymbol(symbol, { serverUrl }),
         filter: finalFilter,
         ...rest
       }
