@@ -60366,13 +60366,13 @@ const Dj = /* @__PURE__ */ nh(Rj), Fj = { class: "w-full h-full relative" }, DU 
   }
 };
 function Lj(r) {
-  return [];
+  return r ? JSON.parse(r) : [];
 }
 function b3(r, t) {
   return r && t ? r + t : null;
 }
 function Hj(r, t) {
-  return Lj().map((n) => [n[0], b3(r, n[1])]);
+  return Lj(t).map((n) => [n[0], b3(r, n[1])]);
 }
 function zj(r, t) {
   const { markerFileType: e, markerFile: n, markerFileProp: i, markerFilePropList: o } = r, s = b3(t, n);
@@ -60380,7 +60380,7 @@ function zj(r, t) {
     markerFile: {
       type: "categorical",
       property: i,
-      stops: Hj(o),
+      stops: Hj(t, o),
       default: s
     }
   } : { markerFile: s };
@@ -60444,8 +60444,12 @@ function Vj(r) {
     if ((h = i.value) != null && h.style) {
       const { symbol: u, filter: c, ...f } = i.value.style;
       let d = c;
-      return r.value instanceof Array && r.value.length > 0 && (d = r.value), {
-        symbol: Nj(u, { serverUrl: t }),
+      r.value instanceof Array && r.value.length > 0 && (d = r.value);
+      const p = {
+        serverUrl: t.value
+      };
+      return {
+        symbol: Nj(u, p),
         filter: d,
         ...f
       };
@@ -60728,9 +60732,9 @@ const tG = {
   setup(r) {
     const t = fo(() => `tianditu-${r.type}`), e = fo(() => ({
       urlTemplate: Qj({
-        layer: layerProps.type,
+        layer: r.type,
         tileMatrixSet: "w",
-        tk: layerProps.tk
+        tk: r.tk
       }),
       subdomains: Kj,
       zIndex: r.zIndex || 0

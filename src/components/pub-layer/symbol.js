@@ -28,7 +28,7 @@ function simplifyMarkerSymbol(markerSymbol, serverUrl) {
       markerFile: {
         type: 'categorical',
         property: markerFileProp,
-        stops: assembleMarkerFilePropList(markerFilePropList),
+        stops: assembleMarkerFilePropList(serverUrl, markerFilePropList),
         default: completeMarkerFile
       }
     }

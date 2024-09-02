@@ -14,9 +14,9 @@ export default {
     const tileLayerOptions = computed(() => {
       return {
         urlTemplate: getTiandituUrl({
-          layer: layerProps.type,
+          layer: props.type,
           tileMatrixSet: 'w',
-          tk: layerProps.tk
+          tk: props.tk
         }),
         subdomains,
         zIndex: props.zIndex || 0

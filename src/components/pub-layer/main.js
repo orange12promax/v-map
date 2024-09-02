@@ -15,8 +15,11 @@ export function usePubVtLayer(filter) {
       if (filter.value instanceof Array && filter.value.length > 0) {
         finalFilter = filter.value
       }
+      const symbolOptions = {
+        serverUrl: serverUrl.value
+      }
       return {
-        symbol: getBetterSymbol(symbol, { serverUrl }),
+        symbol: getBetterSymbol(symbol, symbolOptions),
         filter: finalFilter,
         ...rest
       }
