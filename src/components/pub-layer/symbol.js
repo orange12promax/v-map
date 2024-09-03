@@ -38,18 +38,21 @@ function simplifyMarkerSymbol(markerSymbol, serverUrl) {
 }
 
 export function getBetterSymbol(originSymbol, options) {
-  const { markerFileType, markerFile, markerFileProp, markerFilePropList, ...rest } = originSymbol
-  const markerSymbol = simplifyMarkerSymbol(
-    {
-      markerFileType,
-      markerFile,
-      markerFileProp,
-      markerFilePropList
-    },
-    options?.serverUrl
-  )
-  return {
-    ...rest,
-    ...markerSymbol
+  if (originSymbol) {
+    const { markerFileType, markerFile, markerFileProp, markerFilePropList, ...rest } = originSymbol
+    const markerSymbol = simplifyMarkerSymbol(
+      {
+        markerFileType,
+        markerFile,
+        markerFileProp,
+        markerFilePropList
+      },
+      options?.serverUrl
+    )
+    return {
+      ...rest,
+      ...markerSymbol
+    }
   }
+  return null
 }

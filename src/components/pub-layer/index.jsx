@@ -1,5 +1,6 @@
 import { onMounted, computed } from 'vue'
-import { usePubVtLayer, usePubGeoJsonLayer } from './main'
+import { usePubVtLayer } from './vt.js'
+import { usePubGeoJsonLayer } from './geoJson.js'
 import VVectorTileLayer from '../vector-tile-layer/v-vector-tile-layer.js'
 import VGeoJsonLayer from '../geo-json/index.js'
 
@@ -14,8 +15,13 @@ export default {
     render: String
   },
   setup(props, context) {
-    const filter = computed(() => props.filter)
-    const { queryLayer, style, urlTemplate, zIndex } = usePubVtLayer(filter)
+    const urlTemplate = computed(() => `/tile/{z}/{x}/{y}?layer=${props.id}`)
+    const { queryLayer, zIndex, symbol, renderPlugin } = usePubVtLayer()
+    const style = computed(() => ({
+      symbol: symbol.value,
+      renderPlugin: renderPlugin.value,
+      filter: props.filter && props.filter.length > 0 ? props.filter : true
+    }))
     const { queryJson, featureData } = usePubGeoJsonLayer()
     onMounted(() => {
       queryLayer(props.id)
