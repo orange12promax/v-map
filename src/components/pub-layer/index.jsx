@@ -27,14 +27,7 @@ export default {
       }
       return null
     })
-    const vectorLayerOptions = computed(() => {
-      if (style.value) {
-        return {
-          style: style.value
-        }
-      }
-      return null
-    })
+
     onMounted(() => {
       queryLayer(props.id)
     })
@@ -45,7 +38,7 @@ export default {
     switch (props.render) {
       case 'geoJson':
         return () => (
-          <VVectorLayer id={props.id} options={vectorLayerOptions.value}>
+          <VVectorLayer id={props.id} zIndex={zIndex.value} style={style.value}>
             <VGeoJson id={props.id} />
           </VVectorLayer>
         )

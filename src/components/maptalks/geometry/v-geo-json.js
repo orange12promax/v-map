@@ -25,6 +25,7 @@ export default {
     const { execute, data } = useFetch(fetchFeatureUrl)
     let geometries = []
     function addGeometries(list) {
+      console.log(list)
       if (list && list.length > 0) {
         addGeometry(list)
         geometries = list

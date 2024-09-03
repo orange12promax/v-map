@@ -3,13 +3,13 @@
 </template>
 <script setup>
 import { VectorLayer } from '@/components/maptalks/module.js'
-import { ref, inject, onBeforeUnmount, onMounted, provide, watch, toRefs, watchEffect } from 'vue'
+import { ref, inject, onBeforeUnmount, provide, watch, onMounted } from 'vue'
 
 const props = defineProps({
   id: String,
-  options: Object
+  zIndex: Number,
+  style: Object
 })
-const { id, options } = toRefs(props)
 
 const { addLayer } = inject('parentMap')
 const ready = ref(false)
@@ -19,22 +19,40 @@ function addGeometry(geometry) {
   tileLayer?.addGeometry(geometry)
 }
 
-watchEffect(() => {
-  if (id.value && options.value) {
-    tileLayer = new VectorLayer(id.value, [], options.value)
+function removeTileLayer() {
+  if (tileLayer) {
+    ready.value = false
+    tileLayer.remove()
+    tileLayer = null
+  }
+}
+
+function createTileLayer() {
+  console.log(props.id)
+  console.log(props.style)
+  if (props.style?.symbol) {
+    tileLayer = new VectorLayer(props.id, [], {
+      zIndex: props.zIndex || 10,
+      style: props.style
+    })
     addLayer(tileLayer)
     ready.value = true
   }
+}
+
+onMounted(() => {
+  createTileLayer()
 })
 onBeforeUnmount(() => {
   tileLayer.remove()
 })
-
 watch(
-  () => props.options,
-  () => {
+  () => props.style,
+  (newStyle) => {
     if (tileLayer) {
-      tileLayer.setOptions(props.options)
+      tileLayer.setStyle(newStyle)
+    } else {
+      createTileLayer()
     }
   }
 )
