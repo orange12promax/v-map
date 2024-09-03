@@ -1,8 +1,8 @@
 import { onMounted, computed } from 'vue'
 import { usePubVtLayer } from './vt.js'
-import { usePubGeoJsonLayer } from './geoJson.js'
 import VVectorTileLayer from '../vector-tile-layer/v-vector-tile-layer.js'
-import VGeoJsonLayer from '../geo-json/index.js'
+import VVectorLayer from '../maptalks/v-vector-layer.vue'
+import VGeoJson from '../maptalks/geometry/v-geo-json.js'
 
 export default {
   name: 'VPubLayer',
@@ -17,29 +17,37 @@ export default {
   setup(props, context) {
     const urlTemplate = computed(() => `/tile/{z}/{x}/{y}?layer=${props.id}`)
     const { queryLayer, zIndex, symbol, renderPlugin } = usePubVtLayer()
-    const style = computed(() => ({
-      symbol: symbol.value,
-      renderPlugin: renderPlugin.value,
-      filter: props.filter && props.filter.length > 0 ? props.filter : true
-    }))
-    const { queryJson, featureData } = usePubGeoJsonLayer()
+    const style = computed(() => {
+      if (symbol.value && renderPlugin.value) {
+        return {
+          symbol: symbol.value,
+          renderPlugin: renderPlugin.value,
+          filter: props.filter && props.filter.length > 0 ? props.filter : true
+        }
+      }
+      return null
+    })
+    const vectorLayerOptions = computed(() => {
+      if (style.value) {
+        return {
+          style: style.value
+        }
+      }
+      return null
+    })
     onMounted(() => {
       queryLayer(props.id)
-      queryJson(props.id)
     })
 
     function handleClick(e) {
       context.emit('click', e)
     }
     switch (props.render) {
-      case 'geojson':
+      case 'geoJson':
         return () => (
-          <VGeoJsonLayer
-            id={props.id}
-            json={featureData.value}
-            style={style.value}
-            onClick={handleClick}
-          />
+          <VVectorLayer id={props.id} options={vectorLayerOptions.value}>
+            <VGeoJson id={props.id} />
+          </VVectorLayer>
         )
       case 'vt':
         return () => (

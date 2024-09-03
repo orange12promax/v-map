@@ -3,12 +3,13 @@
 </template>
 <script setup>
 import { VectorLayer } from '@/components/maptalks/module.js'
-import { ref, inject, onBeforeUnmount, onMounted, provide, watch } from 'vue'
+import { ref, inject, onBeforeUnmount, onMounted, provide, watch, toRefs, watchEffect } from 'vue'
 
 const props = defineProps({
   id: String,
   options: Object
 })
+const { id, options } = toRefs(props)
 
 const { addLayer } = inject('parentMap')
 const ready = ref(false)
@@ -18,10 +19,12 @@ function addGeometry(geometry) {
   tileLayer?.addGeometry(geometry)
 }
 
-onMounted(() => {
-  tileLayer = new VectorLayer(props.id, [], props.options)
-  addLayer(tileLayer)
-  ready.value = true
+watchEffect(() => {
+  if (id.value && options.value) {
+    tileLayer = new VectorLayer(id.value, [], options.value)
+    addLayer(tileLayer)
+    ready.value = true
+  }
 })
 onBeforeUnmount(() => {
   tileLayer.remove()
