@@ -10,8 +10,9 @@ const props = defineProps({
   zIndex: Number,
   style: Object
 })
+const emits = defineEmits(['click'])
 
-const { addLayer } = inject('parentMap')
+const { addLayer, event } = inject('parentMap')
 const ready = ref(false)
 let tileLayer
 
@@ -19,17 +20,7 @@ function addGeometry(geometry) {
   tileLayer?.addGeometry(geometry)
 }
 
-function removeTileLayer() {
-  if (tileLayer) {
-    ready.value = false
-    tileLayer.remove()
-    tileLayer = null
-  }
-}
-
 function createTileLayer() {
-  console.log(props.id)
-  console.log(props.style)
   if (props.style?.symbol) {
     tileLayer = new VectorLayer(props.id, [], {
       zIndex: props.zIndex || 10,
@@ -56,6 +47,21 @@ watch(
     }
   }
 )
+
+event.on('click', (coor) => {
+  if (tileLayer) {
+    const geometrys = tileLayer.identify(coor)
+    if (geometrys instanceof Array && geometrys.length > 0) {
+      emits(
+        'click',
+        geometrys.map((item) => ({
+          layer: props.id,
+          properties: item.properties
+        }))
+      )
+    }
+  }
+})
 
 provide('parentVectorLayer', {
   addGeometry

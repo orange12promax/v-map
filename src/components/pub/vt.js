@@ -8,8 +8,10 @@ export function usePubVtLayer() {
 
   const { execute: executeFetchStyle, coreData } = useFetch(fetchStyleUrl)
 
+  const dataType = computed(() => coreData.value?.type)
+
   const renderPlugin = computed(() => {
-    switch (coreData.value?.type) {
+    switch (dataType.value) {
       case 'line': {
         return {
           type: 'line',
@@ -63,6 +65,7 @@ export function usePubVtLayer() {
     queryLayer,
     zIndex,
     symbol,
+    dataType,
     renderPlugin
   }
 }

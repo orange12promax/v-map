@@ -8,7 +8,12 @@ function string2array(str) {
 
 function assembleUrl(urlHost, urlPath) {
   if (urlHost && urlPath) {
-    return urlHost + urlPath
+    // 判断urlHost是否以http开头
+    if (urlHost.startsWith('http')) {
+      return urlHost + urlPath
+    } else {
+      return location.origin + urlHost + urlPath
+    }
   } else {
     return null
   }

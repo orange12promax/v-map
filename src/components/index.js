@@ -1,5 +1,7 @@
 export { default as VMap } from '@/components/maptalks/v-map.vue'
 export { default as VPubLayer } from './pub/index.jsx'
+export { default as VPuaLayer } from './pua/layer.vue'
+export { default as VPuaItem } from './pua/item.jsx'
 export { default as VTiandituLayer } from './tianditu/index.jsx'
 export { default as VVectorLayer } from '@/components/maptalks/v-vector-layer.vue'
 export { default as VMarker } from '@/components/maptalks/geometry/v-marker.js'
