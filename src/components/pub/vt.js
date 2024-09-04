@@ -1,6 +1,6 @@
 import { computed, inject, ref } from 'vue'
 import { useFetch } from '@/services/common.js'
-import { getBetterSymbol } from '@/components/pub-layer/symbol.js'
+import { getBetterSymbol } from '@/components/pub/symbol.js'
 
 export function usePubVtLayer() {
   const { serverUrl } = inject('parentMap')
