@@ -17,7 +17,9 @@ export default {
       addLayer(tileLayer)
     })
     onBeforeUnmount(() => {
-      tileLayer.remove()
+      if (tileLayer?.remove) {
+        tileLayer.remove()
+      }
     })
     return () => null
   }

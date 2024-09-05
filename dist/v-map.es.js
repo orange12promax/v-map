@@ -60614,16 +60614,15 @@ const Zj = {
       a == null || a.addGeometry(u);
     }
     function h() {
-      var u;
-      (u = e.style) != null && u.symbol && (a = new Hj(e.id, [], {
+      a = new Hj(e.id, [], {
         zIndex: e.zIndex || 10,
         style: e.style
-      }), i(a), s.value = !0);
+      }), i(a), s.value = !0;
     }
     return $o(() => {
       h();
     }), Kl(() => {
-      a.remove();
+      a != null && a.remove && a.remove();
     }), fo(
       () => e.style,
       (u) => {
@@ -60862,22 +60861,20 @@ function sG() {
 const aG = ["0", "1", "2", "3", "4", "5", "6", "7"];
 function lG(r) {
   const { layer: t, tileMatrixSet: e, tk: n, ...i } = r;
-  return `https://t{s}.tianditu.gov.cn/${t}_${e}/wmts?${oG(
-    {
-      SERVICE: "WMTS",
-      REQUEST: "GetTile",
-      VERSION: "1.0.0",
-      STYLE: "default",
-      FORMAT: "tiles",
-      TILEMATRIX: "{z}",
-      TILECOL: "{x}",
-      TILEROW: "{y}",
-      tk: n,
-      LAYER: t,
-      TILEMATRIXSET: e,
-      ...i
-    }
-  )}`;
+  return `https://t{s}.tianditu.gov.cn/${t}_${e}/wmts?${oG({
+    SERVICE: "WMTS",
+    REQUEST: "GetTile",
+    VERSION: "1.0.0",
+    STYLE: "default",
+    FORMAT: "tiles",
+    TILEMATRIX: "{z}",
+    TILECOL: "{x}",
+    TILEROW: "{y}",
+    tk: n,
+    LAYER: t,
+    TILEMATRIXSET: e,
+    ...i
+  })}`;
 }
 const hG = {
   name: "VTileLayer",
@@ -60892,7 +60889,7 @@ const hG = {
     return $o(() => {
       n = new Rj(t, r.options), e(n);
     }), Kl(() => {
-      n.remove();
+      n != null && n.remove && n.remove();
     }), () => null;
   }
 }, $U = {

@@ -21,21 +21,21 @@ function addGeometry(geometry) {
 }
 
 function createTileLayer() {
-  if (props.style?.symbol) {
-    tileLayer = new VectorLayer(props.id, [], {
-      zIndex: props.zIndex || 10,
-      style: props.style
-    })
-    addLayer(tileLayer)
-    ready.value = true
-  }
+  tileLayer = new VectorLayer(props.id, [], {
+    zIndex: props.zIndex || 10,
+    style: props.style
+  })
+  addLayer(tileLayer)
+  ready.value = true
 }
 
 onMounted(() => {
   createTileLayer()
 })
 onBeforeUnmount(() => {
-  tileLayer.remove()
+  if (tileLayer?.remove) {
+    tileLayer.remove()
+  }
 })
 watch(
   () => props.style,
