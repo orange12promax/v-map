@@ -55,9 +55,13 @@ export function usePubVtLayer() {
   const zIndex = computed(() => {
     return coreData.value?.style?.zindex
   })
+  const jsonData = computed(() => {
+    return coreData.value?.json
+  })
 
-  async function queryLayer(id) {
-    fetchStyleUrl.value = `/style/get/${id}`
+  async function queryLayer(id, wfs = false) {
+    let serviceName = wfs ? 'wfs' : 'style'
+    fetchStyleUrl.value = `/${serviceName}/get/${id}`
     executeFetchStyle()
   }
 
@@ -66,6 +70,7 @@ export function usePubVtLayer() {
     zIndex,
     symbol,
     dataType,
-    renderPlugin
+    renderPlugin,
+    jsonData
   }
 }

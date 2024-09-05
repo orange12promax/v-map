@@ -21,7 +21,6 @@ export default {
 import VVectorLayer from '../maptalks/v-vector-layer.vue'
 import { usePubVtLayer } from '@/components/pub/vt.js'
 import { computed, onMounted } from 'vue'
-import { useWfsService } from './service.js'
 import VPuaItem from './item.jsx'
 
 const props = defineProps({
@@ -29,8 +28,19 @@ const props = defineProps({
   filter: Array
 })
 const emits = defineEmits(['click'])
-const { queryLayer, zIndex, symbol, dataType, renderPlugin } = usePubVtLayer()
-const { queryFeatures, features } = useWfsService()
+const { queryLayer, zIndex, symbol, dataType, renderPlugin, jsonData } = usePubVtLayer()
+const features = computed(() => {
+  try {
+    const parsedJson = JSON.parse(jsonData.value)
+    if (parsedJson?.features && parsedJson.features.length > 0) {
+      return parsedJson.features
+    } else {
+      return []
+    }
+  } catch (err) {
+    return []
+  }
+})
 
 function getVisible(filter, properties) {
   if (filter && filter.length > 0) {
@@ -47,6 +57,7 @@ function getVisible(filter, properties) {
 
 const simpleFeatures = computed(() => {
   return features.value
+    .filter((feature) => !!feature?.geometry?.coordinates)
     .filter((feature) => {
       return getVisible(props.filter, feature.properties)
     })
@@ -77,7 +88,6 @@ function handleItemClick(e) {
 }
 
 onMounted(() => {
-  queryLayer(props.id)
-  queryFeatures(props.id)
+  queryLayer(props.id, true)
 })
 </script>
