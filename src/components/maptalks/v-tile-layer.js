@@ -5,21 +5,65 @@ import { getUuid } from '@/utils'
 export default {
   name: 'VTileLayer',
   props: {
-    id: String,
-    options: Object
+    urlTemplate: String,
+    subdomains: Array,
+    zIndex: Number
   },
   setup(props) {
-    let uid = props.id || getUuid()
-    const { addLayer } = inject('parentMap')
+    let uid = getUuid()
+    const parentMap = inject('parentMap')
+    const parentGroup = inject('parentGroupTileLayer')
+
+    function createLayer() {
+      return new TileLayer(uid, {
+        urlTemplate: props.urlTemplate,
+        subdomains: props.subdomains,
+        zIndex: props.zIndex
+      })
+    }
+    //  Add the layer to the map or group
+    function addLayerToMap(layer) {
+      if (parentMap?.addLayer && layer) {
+        parentMap.addLayer(layer)
+      }
+    }
+    function addLayerToGroup(layer) {
+      if (parentGroup?.addChildLayer && layer) {
+        parentGroup.addChildLayer([layer])
+      }
+    }
+    function addLayer(layer) {
+      if (parentGroup) {
+        addLayerToGroup(layer)
+      } else {
+        addLayerToMap(layer)
+      }
+    }
+    // Remove the layer from the map or group
+    function removeLayerFromMap(layer) {
+      if (layer?.remove) {
+        layer.remove()
+      }
+    }
+    function removeLayerFromGroup(layer) {
+      if (parentGroup?.removeChildLayer && layer) {
+        parentGroup.removeChildLayer([layer])
+      }
+    }
+    function removeLayer() {
+      if (parentGroup) {
+        removeLayerFromGroup()
+      } else {
+        removeLayerFromMap()
+      }
+    }
     let tileLayer
     onMounted(() => {
-      tileLayer = new TileLayer(uid, props.options)
+      tileLayer = createLayer()
       addLayer(tileLayer)
     })
     onBeforeUnmount(() => {
-      if (tileLayer?.remove) {
-        tileLayer.remove()
-      }
+      removeLayer(tileLayer)
     })
     return () => null
   }

@@ -19,3 +19,16 @@ export function getTiandituUrl(options) {
     ...rest
   })}`
 }
+
+export function getAnnotationByName(name) {
+  switch (name) {
+    case 'vec':
+      return 'cva'
+    case 'img':
+      return 'cia'
+    case 'ter':
+      return 'cta'
+    default:
+      return null
+  }
+}
