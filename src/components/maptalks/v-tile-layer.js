@@ -11,7 +11,7 @@ export default {
     token: String
   },
   setup(props) {
-    let uid = getUuid()
+    const uid = getUuid()
     const parentMap = inject('parentMap')
     const parentGroup = inject('parentGroupTileLayer')
 
