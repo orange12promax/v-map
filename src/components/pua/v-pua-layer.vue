@@ -1,5 +1,5 @@
 <template>
-  <v-vector-layer :id="id" :style="style" @click="handleItemClick">
+  <v-vector-layer :style="style" @click="handleItemClick">
     <v-pua-item
       v-for="ft in simpleFeatures"
       :key="ft.id"
@@ -10,12 +10,6 @@
     />
   </v-vector-layer>
 </template>
-
-<script>
-export default {
-  name: 'VPuaLayer'
-}
-</script>
 
 <script setup>
 import VVectorLayer from '../maptalks/v-vector-layer.vue'
@@ -84,7 +78,10 @@ const style = computed(() => {
 })
 
 function handleItemClick(e) {
-  emits('click', e)
+  emits(
+    'click',
+    e.map((properties) => ({ layer: props.id, properties }))
+  )
 }
 
 onMounted(() => {

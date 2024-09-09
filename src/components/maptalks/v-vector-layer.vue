@@ -4,13 +4,15 @@
 <script setup>
 import { VectorLayer } from '@/components/maptalks/module.js'
 import { ref, inject, onBeforeUnmount, provide, watch, onMounted } from 'vue'
+import { getUuid } from '@/utils/index.js'
 
 const props = defineProps({
-  id: String,
   zIndex: Number,
   style: Object
 })
 const emits = defineEmits(['click'])
+
+const uid = getUuid()
 
 const { addLayer, event } = inject('parentMap')
 const ready = ref(false)
@@ -21,7 +23,7 @@ function addGeometry(geometry) {
 }
 
 function createTileLayer() {
-  tileLayer = new VectorLayer(props.id, [], {
+  tileLayer = new VectorLayer(uid, [], {
     zIndex: props.zIndex || 10,
     style: props.style
   })
@@ -54,10 +56,7 @@ event.on('click', (coor) => {
     if (geometrys instanceof Array && geometrys.length > 0) {
       emits(
         'click',
-        geometrys.map((item) => ({
-          layer: props.id,
-          properties: item.properties
-        }))
+        geometrys.map(({ properties }) => properties)
       )
     }
   }
