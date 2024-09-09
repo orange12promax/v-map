@@ -1,5 +1,5 @@
 <template>
-  <v-vector-layer :style="style" @click="handleItemClick">
+  <v-vector-layer :style="style" :z-index="zIndex" @click="handleItemClick">
     <v-pua-item
       v-for="ft in simpleFeatures"
       :key="ft.id"

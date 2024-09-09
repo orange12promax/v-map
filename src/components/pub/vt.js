@@ -53,7 +53,7 @@ export function usePubVtLayer() {
   })
 
   const zIndex = computed(() => {
-    return coreData.value?.style?.zindex
+    return coreData.value?.style?.zindex || 10
   })
   const jsonData = computed(() => {
     return coreData.value?.json

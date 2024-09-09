@@ -24,8 +24,9 @@ function addGeometry(geometry) {
 
 function createTileLayer() {
   tileLayer = new VectorLayer(uid, [], {
-    zIndex: props.zIndex || 10,
-    style: props.style
+    zIndex: props.zIndex || 2,
+    style: props.style,
+    hitDetect: false
   })
   addLayer(tileLayer)
   ready.value = true
