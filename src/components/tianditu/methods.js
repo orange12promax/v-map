@@ -3,7 +3,7 @@ import { stringify } from '../../utils'
 export const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7']
 
 export function getTiandituUrl(options) {
-  const { layer, tileMatrixSet, tk, ...rest } = options
+  const { layer, tileMatrixSet } = options
   return `https://t{s}.tianditu.gov.cn/${layer}_${tileMatrixSet}/wmts?${stringify({
     SERVICE: 'WMTS',
     REQUEST: 'GetTile',
@@ -13,10 +13,9 @@ export function getTiandituUrl(options) {
     TILEMATRIX: '{z}',
     TILECOL: '{x}',
     TILEROW: '{y}',
-    tk,
+    tk: '{token}',
     LAYER: layer,
-    TILEMATRIXSET: tileMatrixSet,
-    ...rest
+    TILEMATRIXSET: tileMatrixSet
   })}`
 }
 

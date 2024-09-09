@@ -6,6 +6,7 @@
       :url-template="layer.urlTemplate"
       :subdomains="layer.subdomains"
       :z-index="layer.zIndex"
+      :token="token"
     />
   </v-group-tile-layer>
 </template>
@@ -22,16 +23,15 @@ const props = defineProps({
     type: String,
     default: 'w'
   },
-  tk: String,
+  token: String,
   zIndex: Number,
   annotation: Boolean
 })
 
-function getUrlTemplate(layer, tileMatrixSet, tk) {
+function getUrlTemplate(layer, tileMatrixSet) {
   return getTiandituUrl({
     layer,
-    tileMatrixSet,
-    tk
+    tileMatrixSet
   })
 }
 
@@ -42,7 +42,7 @@ const layers = computed(() => {
   }
   return layerList.map((item, index) => ({
     layerName: item,
-    urlTemplate: getUrlTemplate(item, props.tileMatrixSet, props.tk),
+    urlTemplate: getUrlTemplate(item, props.tileMatrixSet),
     subdomains,
     zIndex: index + 1
   }))

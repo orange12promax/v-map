@@ -7,7 +7,8 @@ export default {
   props: {
     urlTemplate: String,
     subdomains: Array,
-    zIndex: Number
+    zIndex: Number,
+    token: String
   },
   setup(props) {
     let uid = getUuid()
@@ -18,7 +19,8 @@ export default {
       return new TileLayer(uid, {
         urlTemplate: props.urlTemplate,
         subdomains: props.subdomains,
-        zIndex: props.zIndex
+        zIndex: props.zIndex,
+        token: props.token
       })
     }
     //  Add the layer to the map or group
@@ -50,12 +52,11 @@ export default {
         parentGroup.removeChildLayer([layer])
       }
     }
-    function removeLayer() {
+    function removeLayer(layer) {
       if (parentGroup) {
-        removeLayerFromGroup()
-      } else {
-        removeLayerFromMap()
+        removeLayerFromGroup(layer)
       }
+      removeLayerFromMap(layer)
     }
     let tileLayer
     onMounted(() => {
